@@ -1,13 +1,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const indexRouter = require("./routes/index");
-
+require("dotenv").config();
+const MONGODB_URI_PROD = process.env. MONGODB_URI_PROD;
+console.log("mongouri", MONGODB_URI_PROD)
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 app.use("/api", indexRouter);
 
-const mongoURI = `mongodb://localhost:27017/todo-demo`;
+const mongoURI = MONGODB_URI_PROD;
 
 mongoose
   .connect(mongoURI, { useNewUrlParser: true })
@@ -18,6 +22,6 @@ mongoose
     console.log("DB connection fail", err);
   });
 
-app.listen(3000, () => {
-  console.log("server on 3000");
+app.listen(5001, () => {
+  console.log("server on 5001");
 });
