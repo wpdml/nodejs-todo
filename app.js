@@ -7,23 +7,18 @@ require("dotenv").config();
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://todo-demo3.netlify.app"
+  "https://todo-demo3.netlify.app",
 ];
 
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: allowedOrigins, 
   methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true,
+  credentials: true, 
+  optionsSuccessStatus: 200, 
 };
 
 const MONGODB_URI_PROD = process.env.MONGODB_URI_PROD;
-console.log("mongouri", MONGODB_URI_PROD)
+console.log("mongouri", MONGODB_URI_PROD);
 const app = express();
 
 app.use(cors(corsOptions));
