@@ -22,6 +22,6 @@ mongoose
     console.log("DB connection fail", err);
   });
 
-app.listen(5001, () => {
+app.listen(process.env.PORT || 5001, () => {
   console.log("server on 5001");
 });
