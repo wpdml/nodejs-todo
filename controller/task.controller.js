@@ -18,7 +18,7 @@ taskController.getTask = async (req, res) => {
     const taskList = await Task.find({}).select("-__v");
     res.status(200).json({ status: "ok", data: taskList });
   } catch (err) {
-    res.status(400), json({ status: "fail", error: err });
+    res.status(400).json({ status: "fail", error: err });
   }
 };
 
