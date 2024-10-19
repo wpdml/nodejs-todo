@@ -2,9 +2,9 @@
   "name": "todolist",
   "version": "1.0.0",
   "main": "index.js",
-  "engine": {
-  "node": "20.18.0",
-  "npm": "10.8.2"
+"engines": {
+  "node": "20.x",
+  "npm": "10.x"
 },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
