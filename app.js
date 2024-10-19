@@ -1,8 +1,8 @@
+const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const indexRouter = require("./routes/index");
-const cors = require("cors");
 require("dotenv").config();
 
 const allowedOrigins = [
@@ -11,10 +11,16 @@ const allowedOrigins = [
 ];
 
 const corsOptions = {
-  origin: allowedOrigins, 
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true, 
-  optionsSuccessStatus: 200, 
+  credentials: true,
+  optionsSuccessStatus: 200,
 };
 
 const MONGODB_URI_PROD = process.env.MONGODB_URI_PROD;
