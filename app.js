@@ -2,12 +2,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const indexRouter = require("./routes/index");
+const cors = require("cors");
+
 require("dotenv").config();
 const MONGODB_URI_PROD = process.env.MONGODB_URI_PROD;
 console.log("mongouri", MONGODB_URI_PROD)
 const app = express();
-app.use(cors());
-const cors = require("cors");
+app.use(cors({ origin: 'https://todo-demo3.netlify.app' }));
+
 app.use(bodyParser.json());
 app.use("/api", indexRouter);
 
