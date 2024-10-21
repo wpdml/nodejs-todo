@@ -32,7 +32,7 @@ userController.loginWithEmail = async (req, res) => {
         return res.status(200).json({ status: "success!", user, token });
       }
     }
-    throw new Error("Email or password does not match");
+    throw new Error("⚠︎ email or password does not match ⚠︎");
   } catch (error) {
     res.status(400).json({ status: "fail", message:error.message });
   }
