@@ -8,7 +8,7 @@ require("dotenv").config();
 const allowedOrigins = [
   "http://localhost:3000",
   "https://todo-demo3.netlify.app",
-  "https://jeuitodo.netlify.app/",
+  "https://jeuitodo.netlify.app",
 ];
 
 const corsOptions = {
