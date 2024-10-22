@@ -9,7 +9,7 @@ userController.createUser = async (req, res) => {
     const { email, name, password } = req.body;
     const user = await User.findOne({ email });
     if (user) {
-      return res.status(409).json({ status: "fail", message: "⚠︎ 이미 가입 된 유저입니다 ⚠︎" });
+      return res.status(409).json({ status: "fail", message: "⚠︎ This email is already registered. Please try logging in or use another email ⚠︎" });
     }
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
