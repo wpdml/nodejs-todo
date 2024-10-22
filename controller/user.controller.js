@@ -9,7 +9,7 @@ userController.createUser = async (req, res) => {
     const { email, name, password } = req.body;
     const user = await User.findOne({ email });
     if (user) {
-      return res.status(409).json({ status: "fail", message: "⚠︎ This email is already registered. Please try logging in or use another email ⚠︎" });
+      return res.status(409).json({ status: "fail", message: "⚠︎ This email is already registered. Try a new email ⚠︎" });
     }
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
