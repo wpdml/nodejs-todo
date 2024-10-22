@@ -25,16 +25,19 @@ userController.loginWithEmail = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email }, "-createdAt -updatedAt -__v");
-    if (user) {
-      const isMath = bcrypt.compareSync(password, user.password);
-      if (isMath) {
-        const token = user.generateToken();
-        return res.status(200).json({ status: "success!", user, token });
-      }
+
+    if (!user) {
+      return res.status(420).json({ status: "fail", message: "⚠︎ This email is not registered ⚠︎" });
     }
-    throw new Error("⚠︎ Email or password does not match ⚠︎");
+    const isMatch = bcrypt.compareSync(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ status: "fail", message: "⚠︎ Wrong password ⚠︎" });
+    }
+    const token = user.generateToken();
+    return res.status(200).json({ status: "success!", user, token });
+    
   } catch (error) {
-    res.status(400).json({ status: "fail", message:error.message });
+    res.status(400).json({ status: "fail", message: error.message });
   }
 };
 
