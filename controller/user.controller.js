@@ -38,12 +38,4 @@ userController.loginWithEmail = async (req, res) => {
   }
 };
 
-userController.getCurrentUser = async (req, res) => {
-  try {
-      res.status(200).json({ status: "success", user: req.user });
-  } catch (error) {
-      res.status(500).json({ status: "fail", message: error.message });
-  }
-};
-
 module.exports = userController;
