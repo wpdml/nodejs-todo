@@ -9,7 +9,7 @@ userController.createUser = async (req, res) => {
     const { email, name, password } = req.body;
     const user = await User.findOne({ email });
     if (user) {
-      throw new Error("이미 가입 된 유저입니다");
+      return res.status(409).json({ status: "fail", message: "⚠︎ 이미 가입 된 유저입니다 ⚠︎" });
     }
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
@@ -32,7 +32,7 @@ userController.loginWithEmail = async (req, res) => {
         return res.status(200).json({ status: "success!", user, token });
       }
     }
-    throw new Error("⚠︎ email or password does not match ⚠︎");
+    throw new Error("⚠︎ Email or password does not match ⚠︎");
   } catch (error) {
     res.status(400).json({ status: "fail", message:error.message });
   }
