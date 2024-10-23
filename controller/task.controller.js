@@ -4,8 +4,9 @@ const taskController = {};
 
 taskController.createTask = async (req, res) => {
   try {
+    const {userId} = req
     const { task, isComplete } = req.body;
-    const newTask = new Task({ task, isComplete });
+    const newTask = new Task({ task, isComplete, author: userId});
     await newTask.save();
     res.status(200).json({ status: "ok", data: newTask });
   } catch (err) {
