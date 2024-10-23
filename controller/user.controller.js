@@ -9,7 +9,12 @@ userController.createUser = async (req, res) => {
     const { email, name, password } = req.body;
     const user = await User.findOne({ email });
     if (user) {
-      return res.status(409).json({ status: "fail", message: "⚠︎ This email is already registered. Try a new email ⚠︎" });
+      return res
+        .status(409)
+        .json({
+          status: "fail",
+          message: "⚠︎ This email is already registered. Try a new email ⚠︎",
+        });
     }
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
@@ -27,15 +32,34 @@ userController.loginWithEmail = async (req, res) => {
     const user = await User.findOne({ email }, "-createdAt -updatedAt -__v");
 
     if (!user) {
-      return res.status(420).json({ status: "fail", message: "⚠︎ This email is not registered ⚠︎" });
+      return res
+        .status(420)
+        .json({
+          status: "fail",
+          message: "⚠︎ This email is not registered ⚠︎",
+        });
     }
     const isMatch = bcrypt.compareSync(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ status: "fail", message: "⚠︎ Wrong password ⚠︎" });
+      return res
+        .status(401)
+        .json({ status: "fail", message: "⚠︎ Wrong password ⚠︎" });
     }
     const token = user.generateToken();
     return res.status(200).json({ status: "success!", user, token });
-    
+  } catch (error) {
+    res.status(400).json({ status: "fail", message: error.message });
+  }
+};
+
+userController.getUser = async(req, res) => {
+  try {
+    const { userId } = req;
+    const user = await User.findById(userId);
+    if(!user){
+    throw new Error("Cannot find user")
+    }
+    res.status(200).json({status:"success",user})
   } catch (error) {
     res.status(400).json({ status: "fail", message: error.message });
   }
